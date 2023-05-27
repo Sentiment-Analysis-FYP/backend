@@ -1,4 +1,5 @@
 import {Request, Response} from "express";
+import {createConnection} from "typeorm";
 
 const express = require('express');
 const dotenv = require('dotenv');
