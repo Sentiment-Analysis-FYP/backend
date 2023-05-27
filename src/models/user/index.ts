@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm"
+import {Entity, PrimaryGeneratedColumn, Column, OneToMany} from "typeorm"
+import {Scrape} from "../scrape";
 
 @Entity()
 export class User {
@@ -16,4 +17,7 @@ export class User {
 
     @Column()
     created_at!: Date
+
+    @OneToMany(() => Scrape, (scrape) => scrape.user)
+    scrapes?: Scrape[]
 }

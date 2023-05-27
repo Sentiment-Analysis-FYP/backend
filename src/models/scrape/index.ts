@@ -1,4 +1,5 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm"
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm"
+import {User} from "../user";
 
 
 @Entity()
@@ -14,4 +15,7 @@ export class Scrape {
 
     @Column({type: "bytea"})
     file?: Buffer
+
+    @ManyToOne(() => User, (user) => user.scrapes)
+    user!: User
 }
