@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, ManyToOne} from "typeorm"
+import {Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn} from "typeorm"
 import {User} from "../user";
 
 
@@ -10,7 +10,7 @@ export class Scrape {
     @Column()
     title!: string
 
-    @Column({type: "timestamp"})
+    @CreateDateColumn({type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)"})
     created_at!: Date
 
     @Column({type: "bytea"})

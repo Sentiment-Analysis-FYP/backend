@@ -1,4 +1,5 @@
 import {NextFunction, Request, Response} from "express";
+import * as controller from '../controller/auth.controller'
 
 const express = require('express')
 const router = express.Router()
@@ -9,3 +10,15 @@ const router = express.Router()
 router.use((req: Request, res: Response, next: NextFunction) => {
     // TODO: middleware here
 })
+
+router.post(
+    '/auth/signup',
+    [],
+    controller.signup
+)
+
+router.post(
+    '/auth/signin',
+    [],
+    controller.signin
+)
