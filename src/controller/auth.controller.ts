@@ -10,8 +10,12 @@ const SALT: number = 11
 dotenv.config();
 export const signup = async (req: Request, res: Response) => {
     try {
+        if (!req.body.email || !req.body.password || !req.body.name)
+            return res.status(400).send('BR')
+
         const user = await dataSource.getRepository(User).create({
             name: req.body.name,
+            email: req.body.email,
             password: bcrypt.hashSync(req.body.password, SALT)
         })
 
