@@ -20,6 +20,8 @@ export const signup = async (req: Request, res: Response) => {
         })
 
         if (!user) return res.status(400).send('Unable to create user')
+
+        await dataSource.getRepository(User).save(user)
         return res.status(201).send(user)
     } catch (error) {
         return res.status(500).send(error)
