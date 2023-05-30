@@ -1,10 +1,10 @@
-import {Request, Response} from "express";
-import {dataSource} from "./data-source";
+import {Request, Response} from "express"
+import {dataSource} from "./data-source"
+import * as authRoutes from './routes/auth.routes'
 
-const express = require('express');
-const dotenv = require('dotenv');
-
-dotenv.config();
+const express = require('express')
+const dotenv = require('dotenv')
+dotenv.config()
 
 dataSource
     .initialize()
@@ -20,6 +20,9 @@ const port = process.env.PORT;
 app.get('/', (req: Request, res: Response) => {
     res.send('Sentiment Analysis FYP Server');
 });
+
+// routes
+app.use(authRoutes)
 
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`);

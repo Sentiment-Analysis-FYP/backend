@@ -14,6 +14,9 @@ export const signup = async (req: Request, res: Response) => {
             name: req.body.name,
             password: bcrypt.hashSync(req.body.password, SALT)
         })
+
+        if (!user) return res.status(400).send('Unable to create user')
+        return res.status(201).send(user)
     } catch (error) {
         return res.status(500).send(error)
     }

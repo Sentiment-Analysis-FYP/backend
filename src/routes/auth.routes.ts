@@ -1,5 +1,6 @@
 import {NextFunction, Request, Response} from "express";
 import * as controller from '../controller/auth.controller'
+import {checkDuplicatedEmail} from "../middleware/checkDuplicatedEmail";
 
 const express = require('express')
 const router = express.Router()
@@ -13,7 +14,7 @@ router.use((req: Request, res: Response, next: NextFunction) => {
 
 router.post(
     '/auth/signup',
-    [],
+    [checkDuplicatedEmail],
     controller.signup
 )
 
