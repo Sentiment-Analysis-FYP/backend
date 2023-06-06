@@ -1,4 +1,4 @@
-import {NextFunction, Request, Response, Router} from "express";
+import {Router} from "express";
 import * as controller from '../controller/auth.controller'
 import {checkDuplicatedEmail} from "../middleware/checkDuplicatedEmail";
 
