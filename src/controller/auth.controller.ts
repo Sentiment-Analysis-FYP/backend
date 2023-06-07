@@ -2,10 +2,13 @@ import e, {Request, Response} from "express";
 import {dataSource} from "../data-source";
 import {User} from "../models/user";
 import bcrypt from "bcrypt"
+import jwt from "jsonwebtoken"
 
 const dotenv = require('dotenv');
 
 const SALT: number = 11
+
+const SECRET: string = "sa123gray8"
 
 dotenv.config();
 export const signup = async (req: Request, res: Response) => {
@@ -38,6 +41,14 @@ export const signin = async (req: Request, res: Response) => {
         if (!user) return res.status(404).send("User not found")
 
         // TODO: found user
+        const token = jwt.sign({id: user.id}, SECRET, {
+            expiresIn: 5184000
+        })
+
+        return res.status(200).send({
+            ...user,
+            token: token
+        })
     } catch (error) {
         return res.status(500).send(error)
     }
