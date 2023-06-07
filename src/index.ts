@@ -16,7 +16,7 @@ dataSource
     console.error("Error during Data Source initialization:\t", error)
 })
 
-const app = express()
+export const app = express()
 
 app.use(cors())
 app.use(bodyParser.json())

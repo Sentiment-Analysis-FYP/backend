@@ -1,5 +1,9 @@
+import request from "supertest"
+import {app} from "../index"
+
 describe('Server Connection test', () => {
-    test('Connection test', () => {
-        expect(3 + 3).toBe(7)
+    test('Connection Test', async () => {
+        const res = await request(app).get("/")
+        expect(res.body).toEqual("Sentiment Analysis FYP Server")
     })
 });
