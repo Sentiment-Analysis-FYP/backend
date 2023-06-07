@@ -1,3 +1,5 @@
+import "reflect-metadata"
+
 import {Request, Response} from "express"
 import {dataSource} from "./data-source"
 import authRouter from './routes/auth.routes'

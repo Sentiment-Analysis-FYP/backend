@@ -7,7 +7,7 @@ export class Scrape {
     @PrimaryGeneratedColumn("uuid")
     id!: string
 
-    @Column()
+    @Column({type: "text"})
     title!: string
 
     @CreateDateColumn({type: "timestamp", default: () => "CURRENT_TIMESTAMP(6)"})
