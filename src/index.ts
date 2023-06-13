@@ -10,6 +10,7 @@ const express = require('express')
 const dotenv = require('dotenv')
 dotenv.config()
 
+
 dataSource
     .initialize()
     .then(() => {
@@ -17,6 +18,7 @@ dataSource
     }).catch((error) => {
     console.error("Error during Data Source initialization:\t", error)
 })
+
 
 export const app = express()
 
