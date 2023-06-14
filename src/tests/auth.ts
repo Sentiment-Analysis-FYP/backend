@@ -17,4 +17,11 @@ describe('Authentication Routes Tests', () => {
         })
         expect(response.status).toEqual(201)
     })
+
+    test('Log In Test', async () => {
+        const response = await request(BASE_URL).post('/auth/signin').send({
+            email: testUser.email,
+            password: testUser.password
+        })
+    })
 });
