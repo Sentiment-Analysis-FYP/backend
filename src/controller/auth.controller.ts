@@ -35,12 +35,17 @@ export const signin = async (req: Request, res: Response) => {
     try {
         const user = await dataSource.getRepository(User).findOneBy({
             email: req.body.email,
-            password: bcrypt.hashSync(req.body.password, SALT)
         })
+        if (!user) return res.status(404).send("Invalid credentials")
 
-        if (!user) return res.status(404).send("User not found")
+        // check password
+        const passwordIsValid = bcrypt.compareSync(
+            req.body.password,
+            user.password
+        )
 
-        // TODO: found user
+        if (!passwordIsValid) return res.status(404).send("Invalid credentials")
+
         const token = jwt.sign({id: user.id}, SECRET, {
             expiresIn: 5184000
         })

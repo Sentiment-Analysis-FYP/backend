@@ -6,7 +6,7 @@ const BASE_URL = process.env.BASE_URL
 
 describe('Authentication Routes Tests', () => {
     const testUser = {
-        email: "foo2@example.com",
+        email: "foo4@example.com",
         name: "bar",
         password: "some password"
     }
