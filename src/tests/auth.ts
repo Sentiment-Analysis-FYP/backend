@@ -23,5 +23,7 @@ describe('Authentication Routes Tests', () => {
             email: testUser.email,
             password: testUser.password
         })
+        console.log(response)
+        expect(response.status).toEqual(200)
     })
 });
