@@ -28,6 +28,9 @@ export const runAnalysis = async (req: Request, res: Response) => {
         console.log(uploadedFile)
 
         // send file to ML server
+
+        // send status code
+        return res.status(200).send()
     } catch (error) {
         return res.status(500).send(error)
     }
