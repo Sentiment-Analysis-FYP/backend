@@ -17,7 +17,10 @@ export const getCompleteAnalysis = async (req: Request, res: Response) => {
 
 export const runAnalysis = async (req: Request, res: Response) => {
     try {
+        const scrapeId = req.params.scrapeId
+
         // get file
+
         // send file to ML server
     } catch (error) {
         return res.status(500).send()

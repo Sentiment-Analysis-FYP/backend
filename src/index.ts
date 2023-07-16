@@ -26,6 +26,7 @@ export const app = express()
 
 app.use(cors())
 app.use(bodyParser.json())
+app.use(fileUpload())
 
 const port = process.env.PORT
 
