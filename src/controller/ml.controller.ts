@@ -20,9 +20,15 @@ export const runAnalysis = async (req: Request, res: Response) => {
         const scrapeId = req.params.scrapeId
 
         // get file
+        if (!req.files || Object.keys(req.files).length === 0) {
+            return res.status(400).send('No files were uploaded.');
+        }
+
+        const uploadedFile = req.files.file
+        console.log(uploadedFile)
 
         // send file to ML server
     } catch (error) {
-        return res.status(500).send()
+        return res.status(500).send(error)
     }
 }
