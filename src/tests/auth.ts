@@ -6,7 +6,7 @@ const BASE_URL = process.env.BASE_URL
 
 describe('Authentication Routes Tests', () => {
     const testUser = {
-        email: "foo4@example.com",
+        email: "foo6@example.com",
         name: "bar",
         password: "some password"
     }
@@ -23,7 +23,6 @@ describe('Authentication Routes Tests', () => {
             email: testUser.email,
             password: testUser.password
         })
-        console.log(response)
         expect(response.status).toEqual(200)
     })
 });

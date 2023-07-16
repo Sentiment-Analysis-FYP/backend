@@ -2,13 +2,15 @@ import "reflect-metadata"
 
 import {Request, Response} from "express"
 import {dataSource} from "./data-source"
-import authRouter from './routes/auth.routes'
+import authRoutes from './routes/auth.routes'
 import bodyParser from "body-parser"
 import cors from 'cors'
+import mlRoutes from "./routes/ml.routes";
 
 const express = require('express')
-const dotenv = require('dotenv')
-dotenv.config()
+const fileUpload = require('express-fileupload')
+
+require('dotenv').config()
 
 
 dataSource
@@ -32,7 +34,8 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 // routes
-app.use('/auth', authRouter)
+app.use('/auth', authRoutes)
+app.use('/ml', mlRoutes)
 
 app.listen(port, () => {
     console.log(`[server]: Server is running at http://localhost:${port}`)
