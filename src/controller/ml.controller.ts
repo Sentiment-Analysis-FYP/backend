@@ -1,6 +1,8 @@
 import {Request, Response} from "express";
 import {dataSource} from "../data-source";
 import {Scrape} from "../models/scrape";
+import fetch from "node-fetch";
+import {UploadedFile} from "../utils";
 
 export const getCompleteAnalysis = async (req: Request, res: Response) => {
     try {
@@ -18,16 +20,31 @@ export const getCompleteAnalysis = async (req: Request, res: Response) => {
 export const runAnalysis = async (req: Request, res: Response) => {
     try {
         const scrapeId = req.params.scrapeId
+        console.log(scrapeId)
 
         // get file
         if (!req.files || Object.keys(req.files).length === 0) {
             return res.status(400).send('No files were uploaded.');
         }
 
-        const uploadedFile = req.files.file
+        const uploadedFile: any = req.files.file
         console.log(uploadedFile)
 
         // send file to ML server
+        const ML_SERVER = process.env.ML_SERVER
+        const uploadPath = `/upload/${scrapeId}`
+        const mlRequest = await fetch(`${ML_SERVER}/${uploadPath}`, {
+            method: 'POST',
+            headers: {
+                "Content-length": uploadedFile.size
+            },
+            body: uploadedFile.data
+        })
+
+        if (mlRequest.status != 200) {
+            // fail
+            return res.status(400).send("Failed to send")
+        }
 
         // send status code
         return res.status(200).send()
