@@ -1,8 +1,8 @@
 import {Request, Response} from "express";
 import {dataSource} from "../data-source";
 import {Scrape} from "../models/scrape";
-import fetch from "node-fetch";
-import {UploadedFile} from "../utils";
+import axios from "axios"
+import FormData from "form-data"
 
 export const getCompleteAnalysis = async (req: Request, res: Response) => {
     try {
@@ -28,18 +28,23 @@ export const runAnalysis = async (req: Request, res: Response) => {
         }
 
         const uploadedFile: any = req.files.file
-        console.log(uploadedFile)
+        console.log(uploadedFile.name)
 
         // send file to ML server
         const ML_SERVER = process.env.ML_SERVER
-        const uploadPath = `/upload/${scrapeId}`
-        const mlRequest = await fetch(`${ML_SERVER}/${uploadPath}`, {
-            method: 'POST',
-            headers: {
-                "Content-length": uploadedFile.size
-            },
-            body: uploadedFile.data
+        const uploadPath = `upload/${scrapeId}`
+
+        const formData = new FormData()
+        formData.append('file', uploadedFile.data, {
+            filename: `${scrapeId}.csv`
         })
+        const mlRequest = await axios.post(`${ML_SERVER}/${uploadPath}`,
+            formData,
+            {
+                ...formData.getHeaders()
+            })
+
+        console.log(mlRequest.data)
 
         if (mlRequest.status != 200) {
             // fail
