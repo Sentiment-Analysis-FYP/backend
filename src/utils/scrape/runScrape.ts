@@ -16,6 +16,9 @@ export const runScrape = async (scrapeParams: ScrapeParameters) => {
     const startDate = scrapeParams.startDate
     const endDate = scrapeParams.endDate
 
+    // no keywords = no scrape
+    if (keywords.length == 0) return
+
     // clean parameters
     const earliestDate = new Date(0).toISOString()
     const currentDate = new Date().toISOString()
