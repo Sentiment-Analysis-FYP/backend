@@ -1,4 +1,4 @@
-import { Client, auth } from "twitter-api-sdk"
+import axios from "axios";
 
 export const generateScrapeRequest = async (keywords: string[], startDate: Date, endDate: Date) => {
     // check which info is provided to determine type of scrape
@@ -9,22 +9,23 @@ export const generateScrapeRequest = async (keywords: string[], startDate: Date,
     // default: case 1
     // else: cannot scrape
 
+    // clean parameters
     const earliestDate = new Date(0).toISOString()
     const currentDate = new Date().toISOString()
     const formattedStartDate = startDate ? new Date(startDate).toISOString() : earliestDate
     const formattedEndDate = endDate ? new Date(endDate).toISOString() : currentDate
-
     const query = keywords.map(keyword => `"${keyword}"`).join(' OR ')
     // Make the request to Twitter API
-    // const response = await axios.get('https://api.twitter.com/2/tweets/search/recent', {
-    //     headers: {
-    //         'Authorization': 'Bearer YOUR_TWITTER_BEARER_TOKEN',
-    //         'Content-Type': 'application/json',
-    //     },
-    //     params: {
-    //         query: query,
-    //         start_time: formattedStartDate,
-    //         end_time: formattedEndDate,
-    //     },
-    // })
+
+    const response = await axios.get('https://api.twitter.com/2/tweets/search/recent', {
+        headers: {
+            'Authorization': 'Bearer YOUR_TWITTER_BEARER_TOKEN',
+            'Content-Type': 'application/json',
+        },
+        params: {
+            query: query,
+            start_time: formattedStartDate,
+            end_time: formattedEndDate,
+        },
+    })
 }
