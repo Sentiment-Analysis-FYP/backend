@@ -25,7 +25,7 @@ export const runScrape = async (scrapeParams: ScrapeParameters) => {
 
     // Make the request to Twitter API
     const BEARER_TOKEN = process.env.TWITTER_BEARER_TOKEN
-    const response = await axios.get('https://api.twitter.com/2/tweets/search/recent', {
+    return await axios.get('https://api.twitter.com/2/tweets/search/recent', {
         headers: {
             'Authorization': `Bearer ${BEARER_TOKEN}`,
             'Content-Type': 'application/json',
@@ -37,6 +37,4 @@ export const runScrape = async (scrapeParams: ScrapeParameters) => {
             max_results: 2
         },
     })
-
-    return response
 }
