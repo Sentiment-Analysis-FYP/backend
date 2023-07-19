@@ -6,6 +6,7 @@ const router = express.Router()
 * Routes for retrieving data from twitter
 * */
 
-
 router.post('/begin',
     controller.scrape)
+
+export default router

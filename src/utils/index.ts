@@ -5,3 +5,9 @@ export interface UploadedFile {
     encoding: string,
     tempFilePath: string
 }
+
+export interface ScrapeParameters {
+    keywords: string[],
+    startDate?: Date,
+    endDate?: Date
+}

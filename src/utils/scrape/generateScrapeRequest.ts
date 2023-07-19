@@ -1,4 +1,4 @@
-export const getScrape = async (keywords: string[], startDate: Date, endDate: Date) => {
+export const generateScrapeRequest = async (keywords: string[], startDate: Date, endDate: Date) => {
     // check which info is provided to determine type of scrape
     // case 1: keyword only
     // case 2: keyword and start date
@@ -7,5 +7,5 @@ export const getScrape = async (keywords: string[], startDate: Date, endDate: Da
     // default: case 1
     // else: cannot scrape
 
-    
+
 }
