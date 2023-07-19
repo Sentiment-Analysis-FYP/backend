@@ -1,11 +1,11 @@
-import {NextFunction, Request, Response} from "express";
-
+import * as controller from "../controller/scrape.controller"
 const express = require('express')
 const router = express.Router()
 
 /*
 * Routes for retrieving data from twitter
 * */
-router.use((req: Request, res: Response, next: NextFunction) => {
-    // TODO: middleware here
-})
+
+
+router.post('/begin',
+    controller.scrape)
