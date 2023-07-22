@@ -9,7 +9,7 @@ const router = express.Router()
 
 // request SA
 router.post(
-    '/run_analysis/:scrapeId',
+    '/upload/run_analysis/:scrapeId',
     controller.runAnalysis
 )
 

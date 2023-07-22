@@ -20,24 +20,29 @@ export const runScrape = async (scrapeParams: ScrapeParameters) => {
     if (keywords.length == 0) return
 
     // clean parameters
-    const earliestDate = new Date(0).toISOString()
-    const currentDate = new Date().toISOString()
+    const earliestDate = new Date(0).toISOString().split('.')[0] + 'Z'
+    const currentDate = new Date().toISOString().split('.')[0] + 'Z'
     const formattedStartDate = startDate ? new Date(startDate).toISOString() : earliestDate
     const formattedEndDate = endDate ? new Date(endDate).toISOString() : currentDate
     const query = keywords.join(' OR ')
 
     // Make the request to Twitter API
     const BEARER_TOKEN = process.env.TWITTER_BEARER_TOKEN
-    return await axios.get('https://api.twitter.com/2/tweets/search/recent', {
+    const response = await axios.post('https://api.twitter.com/2/tweets/search/recent', {
         headers: {
             'Authorization': `Bearer ${BEARER_TOKEN}`,
             'Content-Type': 'application/json',
         },
         params: {
+            max_results: 2,
             query: query,
-            start_time: formattedStartDate,
-            end_time: formattedEndDate,
-            max_results: 2
+            // start_time: formattedStartDate,
+            // end_time: formattedEndDate,
+            // "tweet.fields": "referenced_tweets.id"
         },
     })
+
+    if (response.status != 200) console.log(response)
+
+    return response
 }

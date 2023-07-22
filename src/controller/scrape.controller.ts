@@ -8,8 +8,10 @@ export const scrape = async (req: Request, res: Response) => {
         console.log(scrapeParams)
 
         const scrapedData = await runScrape(scrapeParams)
-        return res.status(200).send()
+        if (!scrapedData) return res.status(501).send("Could not scrape")
+
+        return res.status(200).send(scrapedData.data)
     } catch (error) {
-        return res.status(500).send()
+        return res.status(500).send(error)
     }
 }

@@ -14,5 +14,5 @@ export const dataSource = new DataSource({
     database: process.env.DB_NAME,
     entities: [path.join(__dirname, 'models', '**', '*.{ts,js}')],
     logging: true,
-    synchronize: false
+    synchronize: true
 })
