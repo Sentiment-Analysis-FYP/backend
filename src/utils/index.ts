@@ -7,6 +7,7 @@ export interface UploadedFile {
 }
 
 export interface ScrapeParameters {
+    username: string,
     keywords: string[],
     startDate?: Date,
     endDate?: Date

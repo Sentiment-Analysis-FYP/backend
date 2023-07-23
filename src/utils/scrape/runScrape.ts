@@ -5,6 +5,7 @@ require('dotenv').config()
 
 export const runScrape = async (scrapeParams: ScrapeParameters) => {
     // check which info is provided to determine type of scrape
+    // usernames will always be searched independently
     // case 1: keyword only
     // case 2: keyword and start date
     // case 3: keyword and end date
@@ -12,12 +13,13 @@ export const runScrape = async (scrapeParams: ScrapeParameters) => {
     // default: case 1
     // else: cannot scrape
 
+    const username = scrapeParams.username
     const keywords = scrapeParams.keywords
     const startDate = scrapeParams.startDate
     const endDate = scrapeParams.endDate
 
     // no keywords = no scrape
-    if (keywords.length == 0) return
+    if (keywords.length == 0 && username.length == 0) return
 
     // clean parameters
     const earliestDate = new Date(0).toISOString().split('.')[0] + 'Z'
@@ -26,23 +28,16 @@ export const runScrape = async (scrapeParams: ScrapeParameters) => {
     const formattedEndDate = endDate ? new Date(endDate).toISOString() : currentDate
     const query = keywords.join(' OR ')
 
-    // Make the request to Twitter API
-    const BEARER_TOKEN = process.env.TWITTER_BEARER_TOKEN
-    const response = await axios.post('https://api.twitter.com/2/tweets/search/recent', {
-        headers: {
-            'Authorization': `Bearer ${BEARER_TOKEN}`,
-            'Content-Type': 'application/json',
-        },
-        params: {
-            max_results: 2,
-            query: query,
-            // start_time: formattedStartDate,
-            // end_time: formattedEndDate,
-            // "tweet.fields": "referenced_tweets.id"
-        },
-    })
+    // Make the request to ML SERVER
+    const response = await axios.post(
+        `${process.env.ML_SERVER}/scrape/${Math.floor(new Date().getTime() / 1000)}`,
+        {
+            ...scrapeParams,
+            start_date: startDate,
+            end_date: endDate
+        })
 
-    if (response.status != 200) console.log(response)
+    console.log(response.status)
 
     return response
 }
