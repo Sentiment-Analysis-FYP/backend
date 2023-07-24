@@ -33,8 +33,8 @@ export const runScrape = async (scrapeParams: ScrapeParameters) => {
         `${process.env.ML_SERVER}/scrape/${Math.floor(new Date().getTime() / 1000)}`,
         {
             ...scrapeParams,
-            start_date: startDate,
-            end_date: endDate
+            start_date: formattedStartDate,
+            end_date: formattedEndDate
         })
 
     console.log(response.status)
