@@ -12,6 +12,9 @@ export const getCompleteAnalysis = async (req: Request, res: Response) => {
         const scrape = await dataSource.getRepository(Scrape).findOneBy({
             id: req.body.id
         })
+
+        const {data} = req.body
+        console.log(data)
     } catch (error) {
         return res.status(500).send('Could not complete scrape')
     }
