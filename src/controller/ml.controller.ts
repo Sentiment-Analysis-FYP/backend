@@ -3,6 +3,7 @@ import {dataSource} from "../data-source";
 import {Scrape} from "../models/scrape";
 import axios from "axios"
 import FormData from "form-data"
+import {sendCompletionNotice} from "./socket.controller";
 
 export const getCompleteAnalysis = async (req: Request, res: Response) => {
     try {
@@ -13,7 +14,10 @@ export const getCompleteAnalysis = async (req: Request, res: Response) => {
             id: req.body.id
         })
 
-        const {data} = req.body
+        const {scrape_id, data, email} = req.body
+
+        sendCompletionNotice(email)
+
         console.log(data)
     } catch (error) {
         return res.status(500).send('Could not complete scrape')

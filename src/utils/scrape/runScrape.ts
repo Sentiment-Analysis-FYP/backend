@@ -26,8 +26,7 @@ export const runScrape = async (scrapeParams: ScrapeParameters) => {
     const currentDate = new Date().toISOString().split('.')[0] + 'Z'
     const formattedStartDate = startDate ? new Date(startDate).toISOString() : earliestDate
     const formattedEndDate = endDate ? new Date(endDate).toISOString() : currentDate
-    const query = keywords.join(' OR ')
-
+    keywords.join(' OR ');
     // Make the request to ML SERVER
     const response = await axios.post(
         `${process.env.ML_SERVER}/scrape/${Math.floor(new Date().getTime() / 1000)}`,
