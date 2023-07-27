@@ -17,6 +17,9 @@ export const runScrape = async (scrapeParams: ScrapeParameters) => {
     const keywords = scrapeParams.keywords
     const startDate = scrapeParams.startDate
     const endDate = scrapeParams.endDate
+    const email = scrapeParams.email
+
+    console.log(scrapeParams.keywords)
 
     // no keywords = no scrape
     if (keywords.length == 0 && username.length == 0) return
@@ -26,14 +29,15 @@ export const runScrape = async (scrapeParams: ScrapeParameters) => {
     const currentDate = new Date().toISOString().split('.')[0] + 'Z'
     const formattedStartDate = startDate ? new Date(startDate).toISOString() : earliestDate
     const formattedEndDate = endDate ? new Date(endDate).toISOString() : currentDate
-    keywords.join(' OR ');
     // Make the request to ML SERVER
     const response = await axios.post(
         `${process.env.ML_SERVER}/scrape/${Math.floor(new Date().getTime() / 1000)}`,
         {
-            ...scrapeParams,
+            username: username,
+            keywords: keywords,
+            email: email,
             start_date: formattedStartDate,
-            end_date: formattedEndDate
+            end_date: formattedEndDate,
         })
 
     console.log(response.status)

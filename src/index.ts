@@ -41,7 +41,7 @@ socketServer.on('connection', (socket, request) => {
     socket.on('message', (message: string) => {
         const data = JSON.parse(message)
 
-        socketClients.set(data.email, socket)
+        socketClients.set(data.email ? data.email : "guest21", socket)
         console.log(socketClients.keys())
     })
 

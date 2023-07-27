@@ -3,7 +3,7 @@
 import WebSocket from "ws";
 import {socketClients} from "../index";
 
-export const sendCompletionNotice = (email: string) => {
+export const sendCompletion = (email: string, analyzedData: string) => {
     const socket = socketClients.get(email)
 
     if (!socket) {
@@ -12,6 +12,7 @@ export const sendCompletionNotice = (email: string) => {
     }
 
     socket.send(JSON.stringify({
-        isComplete: true
+        isComplete: true,
+        data: analyzedData
     }))
 }

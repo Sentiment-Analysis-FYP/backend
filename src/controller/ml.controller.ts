@@ -3,7 +3,7 @@ import {dataSource} from "../data-source";
 import {Scrape} from "../models/scrape";
 import axios from "axios"
 import FormData from "form-data"
-import {sendCompletionNotice} from "./socket.controller";
+import {sendCompletion} from "./socket.controller";
 
 export const getCompleteAnalysis = async (req: Request, res: Response) => {
     try {
@@ -15,10 +15,11 @@ export const getCompleteAnalysis = async (req: Request, res: Response) => {
         })
 
         const {scrape_id, data, email} = req.body
+        const jsonData = JSON.stringify(data)
+        console.log(req.body)
+        sendCompletion(email, jsonData)
 
-        sendCompletionNotice(email)
-
-        console.log(data)
+        console.log(`notice sent to ${email}`)
     } catch (error) {
         return res.status(500).send('Could not complete scrape')
     }
@@ -45,11 +46,13 @@ export const runAnalysis = async (req: Request, res: Response) => {
         formData.append('file', uploadedFile.data, {
             filename: `${scrapeId}.csv`
         })
+
         const mlRequest = await axios.post(`${ML_SERVER}/${uploadPath}`,
             formData,
             {
                 ...formData.getHeaders()
-            })
+            }
+        )
 
         console.log(mlRequest.data)
 
