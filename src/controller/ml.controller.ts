@@ -28,6 +28,7 @@ export const getCompleteAnalysis = async (req: Request, res: Response) => {
 export const runAnalysis = async (req: Request, res: Response) => {
     try {
         const scrapeId = req.params.scrapeId
+        const {email} = req.body
         console.log(scrapeId)
 
         // get file
@@ -44,20 +45,23 @@ export const runAnalysis = async (req: Request, res: Response) => {
 
         const formData = new FormData()
         formData.append('file', uploadedFile.data, {
-            filename: `${scrapeId}.csv`
+            filename: `${scrapeId}.csv`,
         })
 
-        const mlRequest = await axios.post(`${ML_SERVER}/${uploadPath}`,
+        formData.append('email', email)
+
+        const mlResponse = await axios.post(`${ML_SERVER}/${uploadPath}`,
             formData,
             {
                 ...formData.getHeaders()
             }
         )
 
-        console.log(mlRequest.data)
+        console.log(mlResponse.data)
 
-        if (mlRequest.status != 200) {
+        if (mlResponse.status != 200) {
             // fail
+            console.log(mlResponse)
             return res.status(400).send("Failed to send")
         }
 

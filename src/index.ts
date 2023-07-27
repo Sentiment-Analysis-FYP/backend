@@ -28,8 +28,12 @@ dataSource
 export const app = express()
 
 app.use(cors())
-app.use(bodyParser.json())
-app.use(fileUpload())
+app.use(bodyParser.json({limit: '50mb'}))
+app.use(fileUpload({
+    limits: {
+        fileSize: 50000000
+    }
+}))
 
 const server = http.createServer(app)
 
