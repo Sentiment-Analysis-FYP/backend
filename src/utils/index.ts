@@ -11,5 +11,7 @@ export interface ScrapeParameters {
     keywords: string[],
     startDate?: Date,
     endDate?: Date,
-    email: string
+    email: string,
+    title?: string,
+    maxTweets?: number
 }

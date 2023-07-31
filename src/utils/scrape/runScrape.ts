@@ -1,5 +1,8 @@
 import axios from "axios"
 import {ScrapeParameters} from "../index";
+import {dataSource} from "../../data-source";
+import {User} from "../../models/user";
+import {Scrape} from "../../models/scrape";
 
 require('dotenv').config()
 
@@ -18,8 +21,9 @@ export const runScrape = async (scrapeParams: ScrapeParameters) => {
     const startDate = scrapeParams.startDate
     const endDate = scrapeParams.endDate
     const email = scrapeParams.email
+    const title = scrapeParams.title
 
-    console.log(scrapeParams.keywords)
+    console.log(scrapeParams.title)
 
     // no keywords = no scrape
     if (keywords.length == 0 && username.length == 0) return
@@ -30,8 +34,9 @@ export const runScrape = async (scrapeParams: ScrapeParameters) => {
     const formattedStartDate = startDate ? new Date(startDate).toISOString() : earliestDate
     const formattedEndDate = endDate ? new Date(endDate).toISOString() : currentDate
     // Make the request to ML SERVER
+    const scrapeId = Math.floor(new Date().getTime() / 1000)
     const response = await axios.post(
-        `${process.env.ML_SERVER}/scrape/${Math.floor(new Date().getTime() / 1000)}`,
+        `${process.env.ML_SERVER}/scrape/${scrapeId}`,
         {
             username: username,
             keywords: keywords,
@@ -41,6 +46,31 @@ export const runScrape = async (scrapeParams: ScrapeParameters) => {
         })
 
     console.log(response.status)
+
+    if (response.status == 200) {
+        // req success, store scrape id
+        const user = await dataSource.getRepository(User).findOneBy({
+            email: email
+        })
+        console.log(`scrape title is ${title}`)
+
+        const scrape = await dataSource.getRepository(Scrape)
+            .save({
+                id: scrapeId.toString(),
+                title: title ? title : 'Untitled Scrape',
+                user: user!
+            })
+
+        if (user && scrape) {
+            console.log(`here ${title}`)
+            const userScrapes: Scrape[] = user.scrapes ? user.scrapes : []
+            userScrapes.push(scrape)
+            user.scrapes = userScrapes
+            // console.log(user.scrapes)
+        } else {
+            console.log('fai')
+        }
+    }
 
     return response
 }

@@ -9,4 +9,7 @@ const router = express.Router()
 router.post('/begin',
     controller.scrape)
 
+router.post('/user',
+    controller.getUserScrapes)
+
 export default router

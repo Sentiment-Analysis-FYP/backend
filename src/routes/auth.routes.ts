@@ -14,7 +14,7 @@ const router = Router()
 
 router.post(
     '/register',
-    [checkDuplicatedEmail],
+    // [checkDuplicatedEmail],
     controller.signup
 )
 
