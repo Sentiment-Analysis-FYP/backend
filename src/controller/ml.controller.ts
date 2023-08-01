@@ -18,13 +18,18 @@ export const getCompleteAnalysis = async (req: Request, res: Response) => {
         const jsonData = JSON.stringify(data)
         console.log(req.body)
         sendCompletion(email, jsonData)
+        console.log(`notice sent to ${email}`)
 
         const ML_SERVER = process.env.ML_SERVER
         const path = `emotion/${scrape_id}`
         const mlRes = await axios.get(`${ML_SERVER}/${path}`)
-        console.log(mlRes.data)
-
-        console.log(`notice sent to ${email}`)
+        console.log(mlRes.data.data)
+        const emoJson = JSON.stringify(mlRes.data)
+        setTimeout(() => {
+            // router.push('/analysis')
+            sendCompletion('emotion', emoJson)
+        }, 3000)
+        console.log(`emotion complete sent to ${email}`)
     } catch (error) {
         return res.status(500).send('Could not complete scrape')
     }
