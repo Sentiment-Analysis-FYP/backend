@@ -18,12 +18,13 @@ export const runScrape = async (scrapeParams: ScrapeParameters) => {
 
     const username = scrapeParams.username
     const keywords = scrapeParams.keywords
-    const startDate = scrapeParams.startDate
-    const endDate = scrapeParams.endDate
+    const startDate = scrapeParams.start_date
+    const endDate = scrapeParams.end_date
     const email = scrapeParams.email
     const title = scrapeParams.title
+    const maxTweets = scrapeParams.max_tweets
 
-    console.log(scrapeParams.title)
+    console.log(scrapeParams.max_tweets)
 
     // no keywords = no scrape
     if (keywords.length == 0 && username.length == 0) return
@@ -43,6 +44,7 @@ export const runScrape = async (scrapeParams: ScrapeParameters) => {
             email: email,
             start_date: formattedStartDate,
             end_date: formattedEndDate,
+            max_tweets: maxTweets
         })
 
     console.log(response.status)

@@ -34,8 +34,8 @@ export const getUserScrapes = async (req: Request, res: Response) => {
             .where("user.id = :id", {id: user.id})
             .getMany()
 
-        console.log(scrapes[0].scrapes)
-        console.log(user.scrapes ? user.scrapes : user.email)
+        // console.log(scrapes[0].scrapes)
+        // console.log(user.scrapes ? user.scrapes : user.email)
         return res.status(200).send({scrapes: scrapes})
     } catch (error) {
         return res.status(500).send(error)

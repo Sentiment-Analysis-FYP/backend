@@ -9,9 +9,9 @@ export interface UploadedFile {
 export interface ScrapeParameters {
     username: string,
     keywords: string[],
-    startDate?: Date,
-    endDate?: Date,
+    start_date?: Date,
+    end_date?: Date,
     email: string,
     title?: string,
-    maxTweets?: number
+    max_tweets: string
 }
