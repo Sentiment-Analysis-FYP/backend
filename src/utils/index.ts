@@ -13,5 +13,5 @@ export interface ScrapeParameters {
     end_date?: Date,
     email: string,
     title?: string,
-    max_tweets: string
+    max_tweets: number
 }

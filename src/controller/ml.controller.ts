@@ -19,6 +19,11 @@ export const getCompleteAnalysis = async (req: Request, res: Response) => {
         console.log(req.body)
         sendCompletion(email, jsonData)
 
+        const ML_SERVER = process.env.ML_SERVER
+        const path = `emotion/${scrape_id}`
+        const mlRes = await axios.get(`${ML_SERVER}/${path}`)
+        console.log(mlRes.data)
+
         console.log(`notice sent to ${email}`)
     } catch (error) {
         return res.status(500).send('Could not complete scrape')
@@ -69,5 +74,20 @@ export const runAnalysis = async (req: Request, res: Response) => {
         return res.status(200).send()
     } catch (error) {
         return res.status(500).send(error)
+    }
+}
+
+export const getEmotionData = async (req: Request, res: Response) => {
+    try {
+        const {scrapeId} = req.body
+
+        const ML_SERVER = process.env.ML_SERVER
+        const uploadPath = `download/${scrapeId}`
+
+        const mlResponse = await axios.post(`${ML_SERVER}/download`)
+
+
+    } catch (error) {
+        return res.status(500).send('Could not get emotion data.')
     }
 }

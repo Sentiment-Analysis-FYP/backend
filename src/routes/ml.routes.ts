@@ -19,4 +19,10 @@ router.post(
     controller.getCompleteAnalysis
 )
 
+// get emotion data
+router.post(
+    '/emotion',
+    controller.getEmotionData
+)
+
 export default router
