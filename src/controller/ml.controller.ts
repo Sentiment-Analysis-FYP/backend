@@ -24,7 +24,7 @@ export const getCompleteAnalysis = async (req: Request, res: Response) => {
         const path = `emotion/${scrape_id}`
         const mlRes = await axios.get(`${ML_SERVER}/${path}`)
         console.log(mlRes.data.data)
-        const emoJson = JSON.stringify(mlRes.data)
+        const emoJson = mlRes.data
         setTimeout(() => {
             // router.push('/analysis')
             sendCompletion('emotion', emoJson)
